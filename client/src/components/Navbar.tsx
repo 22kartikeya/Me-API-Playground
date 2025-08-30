@@ -15,8 +15,8 @@ export default function Navbar({
   onTopSkills,
   onAddProfile,
 }: Props) {
-  const [query, setQuery] = useState("");
-  const [projectSkill, setProjectSkill] = useState("");
+    const [query, setQuery] = useState("");
+    const [projectSkill, setProjectSkill] = useState("");
 
   const submitSearch = (e?: React.FormEvent) => {
     e?.preventDefault();
@@ -30,7 +30,10 @@ export default function Navbar({
 
   return (
     <div className="flex items-center justify-between px-6 py-3 bg-white shadow-sm border-b border-slate-200">
-      <div className="flex items-center font-bold text-xl text-blue-600">
+      <div
+        className="flex items-center font-bold text-xl text-blue-600 cursor-pointer"
+        onClick={() => onSearch("")}
+      >
         Me-API Playground
       </div>
       <div className="flex items-center gap-4">

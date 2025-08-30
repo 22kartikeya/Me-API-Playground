@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import ProfileCard from "./components/ProfileCard";
 import ProfileModal from "./components/ProfileModal";
 import axios from "axios";
+import { Loading } from "./components/Loading";
 
 export default function App() {
   const [profiles, setProfiles] = useState<IProfile[]>([]);
@@ -20,7 +21,7 @@ export default function App() {
       const res = await axios.get(`${API_BASE}/profile`);
       setProfiles(res.data.profiles || []);
       setError(null);
-    } catch (e: any) {
+    } catch (e) {
       setError("Failed to fetch profiles");
       console.error(e);
     } finally {
@@ -141,8 +142,8 @@ export default function App() {
         onTopSkills={onTopSkills}
         onAddProfile={openCreate}
       />
-      <main className="container mx-auto p-4">
-        {loading && <div className="text-gray-500">Loading…</div>}
+      <div className="container mx-auto p-4">
+        {loading && <Loading/>}
         {error && <div className="text-red-500">{error}</div>}
         {!loading && !profiles.length && (
           <div className="text-gray-500">No profiles yet</div>
@@ -156,7 +157,7 @@ export default function App() {
             />
           ))}
         </div>
-      </main>
+      </div>
 
       {showModal && (
         <ProfileModal
