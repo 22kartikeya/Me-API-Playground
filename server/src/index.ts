@@ -7,9 +7,12 @@ dotenv.config();
 
 export const mongo_url = process.env.MONGO_URI || "";
 export const port = process.env.PORT || 3000;
+export const frontend_url = process.env.FRONTEND_URI || "";
 
 const app = express();
-app.use(cors());
+app.use(cors({
+    origin: frontend_url
+}));
 app.use(express.json());
 
 app.use('/api', router);
