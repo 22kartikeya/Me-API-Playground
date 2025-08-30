@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import type { IProfile } from "./types";
-import { api } from "./api";
 import Navbar from "./components/Navbar";
 import ProfileCard from "./components/ProfileCard";
 import ProfileModal from "./components/ProfileModal";
+import axios from "axios";
 
 export default function App() {
   const [profiles, setProfiles] = useState<IProfile[]>([]);
@@ -12,11 +12,12 @@ export default function App() {
   const [showModal, setShowModal] = useState(false);
   const [isCreateMode, setIsCreateMode] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const API_BASE = import.meta.env.VITE_BASE_URL || "";
 
   const fetchProfiles = async () => {
     try {
       setLoading(true);
-      const res = await api.get("/profile");
+      const res = await axios.get(`${API_BASE}/profile`);
       setProfiles(res.data.profiles || []);
       setError(null);
     } catch (e: any) {
@@ -38,7 +39,7 @@ export default function App() {
     }
     try {
       setLoading(true);
-      const res = await api.get("/search", { params: { q } });
+      const res = await axios.get(`${API_BASE}/search`, { params: { q } });
       setProfiles(res.data.results || []);
       setError(null);
     } catch (e) {
@@ -56,7 +57,7 @@ export default function App() {
     }
     try {
       setLoading(true);
-      const res = await api.get("/projects", { params: { skill } });
+      const res = await axios.get(`${API_BASE}/projects`, { params: { skill } });
       const projects = res.data.projects || [];
       const pseudo: IProfile[] = projects.map((p: any, idx: number) => ({
         _id: "proj-" + idx,
@@ -81,7 +82,7 @@ export default function App() {
   const onTopSkills = async () => {
     try {
       setLoading(true);
-      const res = await api.get("/skills/top");
+      const res = await axios.get(`${API_BASE}/skills/top`);
       const topSkills: string[] = res.data.topSkills || [];
       if (topSkills.length) {
         onSearch(topSkills[0]);
@@ -112,9 +113,15 @@ export default function App() {
     try {
       setLoading(true);
       if (isCreateMode) {
-        await api.post("/profile", p);
+        await axios.post(
+          `${API_BASE}/profile`,
+          p,
+          { headers: { "Content-Type": "application/json" } }
+        );
       } else {
-        await api.put("/profile", p);
+        await axios.put(`${API_BASE}/profile`, p,
+          { headers: { "Content-Type": "application/json" }}
+        );
       }
       await fetchProfiles();
       setShowModal(false);
@@ -134,13 +141,13 @@ export default function App() {
         onTopSkills={onTopSkills}
         onAddProfile={openCreate}
       />
-      <main className="container">
-        {loading && <div className="info">Loading…</div>}
-        {error && <div className="error">{error}</div>}
+      <main className="container mx-auto p-4">
+        {loading && <div className="text-gray-500">Loading…</div>}
+        {error && <div className="text-red-500">{error}</div>}
         {!loading && !profiles.length && (
-          <div className="info">No profiles yet</div>
+          <div className="text-gray-500">No profiles yet</div>
         )}
-        <div className="grid">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {profiles.map((p) => (
             <ProfileCard
               key={p._id || p.email || Math.random()}

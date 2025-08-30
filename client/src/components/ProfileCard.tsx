@@ -7,93 +7,101 @@ const ProfileCard = ({
   profile: IProfile;
   onClick?: () => void;
 }) => {
+  const displayedSkills = (profile.skills || []).slice(0, 4);
+  const displayedProject = profile.projects?.[0];
+  const displayedWork = profile.work?.[0];
+
   return (
-    <div className="bg-white rounded-[12px] p-3 cursor-pointer transition-transform duration-150 hover:-translate-y-1.5 flex gap-2 flex-col"
+    <div
+      className="bg-white rounded-2xl p-4 cursor-pointer transition-transform duration-150 hover:-translate-y-1 shadow-md hover:shadow-lg border border-slate-200 flex flex-col justify-between"
       onClick={onClick}
     >
-      <div className="mb-1">
-        <h3 className="m-0 text-[18px] font-semibold leading-6">
-          {profile.name}
-        </h3>
-        <div className="text-slate-500">{profile.email}</div>
+      <div className="mb-3">
+        <h3 className="text-lg font-semibold text-slate-900">{profile.name}</h3>
+        <div className="text-sm text-slate-500">{profile.email}</div>
       </div>
-
-      <div className="mt-2">
-        <div className="flex justify-between mt-2">
-          <div>Education:</div>
-          <span>{profile.education || "—"}</span>
-        </div>
-
-        <div className="flex justify-between mt-2">
-          <div>Skills:</div>
-          <div className="flex flex-wrap gap-2 max-w-[70%] justify-end">
-            {(profile.skills || []).map((s) => (
+      <div className="mb-2 flex justify-between text-sm text-slate-700">
+        <span className="font-medium">Education:</span>
+        <span>{profile.education || "—"}</span>
+      </div>
+      {displayedSkills.length > 0 && (
+        <div className="mb-2">
+          <span className="font-medium text-sm text-slate-700">Skills:</span>
+          <div className="flex flex-wrap gap-2 mt-1">
+            {displayedSkills.map((s) => (
               <span
-                className="bg-slate-100 px-2 py-1 rounded-full text-[13px]"
                 key={s}
+                className="bg-blue-50 text-blue-600 text-xs px-2 py-1 rounded-full"
               >
                 {s}
               </span>
             ))}
+            {(profile.skills || []).length > 4 && (
+              <span className="text-xs text-slate-400">
+                +{profile.skills.length - 4}
+              </span>
+            )}
           </div>
         </div>
-
-        {profile.projects && profile.projects.length > 0 && (
-          <div className="flex justify-between mt-2">
-            <div>Projects:</div>
-            <div className="max-w-[70%] text-right">
-              {profile.projects!.slice(0, 3).map((pj) => (
-                <div key={pj.title} className="mt-1.5">
-                  <div className="font-semibold">{pj.title}</div>
-                  {pj.description && (
-                    <div className="text-[13px] text-slate-500">
-                      {pj.description}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        <div className="flex items-center justify-between mt-3">
-          <div className="text-[14px]">
-            {profile.links?.github && (
-              <a
-                href={profile.links.github}
-                onClick={(e) => e.stopPropagation()}
-                target="_blank"
-                rel="noreferrer"
-                className="text-blue-600 no-underline mr-2 hover:underline"
-              >
-                GitHub
-              </a>
-            )}
-            {profile.links?.linkedin && (
-              <a
-                href={profile.links.linkedin}
-                onClick={(e) => e.stopPropagation()}
-                target="_blank"
-                rel="noreferrer"
-                className="text-blue-600 no-underline mr-2 hover:underline"
-              >
-                LinkedIn
-              </a>
-            )}
-            {profile.links?.portfolio && (
-              <a
-                href={profile.links.portfolio}
-                onClick={(e) => e.stopPropagation()}
-                target="_blank"
-                rel="noreferrer"
-                className="text-blue-600 no-underline mr-2 hover:underline"
-              >
-                Portfolio
-              </a>
+      )}
+      {displayedProject && (
+        <div className="mb-2">
+          <span className="font-medium text-sm text-slate-700">Project:</span>
+          <div className="mt-1 text-sm text-slate-800">
+            <div className="font-semibold">{displayedProject.title}</div>
+            {displayedProject.description && (
+              <div className="text-slate-500 text-xs">
+                {displayedProject.description}
+              </div>
             )}
           </div>
-          <div className="text-[12px] text-slate-500">Click card to edit</div>
         </div>
+      )}
+      {displayedWork && (
+        <div className="mb-2 text-sm text-slate-700 flex justify-between">
+          <span className="font-medium">Work:</span>
+          <span className="truncate max-w-[70%]">
+            {displayedWork.role} @ {displayedWork.company}
+          </span>
+        </div>
+      )}
+      <div className="mt-3 flex justify-between items-center text-sm">
+        <div className="flex gap-2">
+          {profile.links?.github && (
+            <a
+              href={profile.links.github}
+              onClick={(e) => e.stopPropagation()}
+              target="_blank"
+              rel="noreferrer"
+              className="text-blue-600 hover:underline"
+            >
+              GitHub
+            </a>
+          )}
+          {profile.links?.linkedin && (
+            <a
+              href={profile.links.linkedin}
+              onClick={(e) => e.stopPropagation()}
+              target="_blank"
+              rel="noreferrer"
+              className="text-blue-600 hover:underline"
+            >
+              LinkedIn
+            </a>
+          )}
+          {profile.links?.portfolio && (
+            <a
+              href={profile.links.portfolio}
+              onClick={(e) => e.stopPropagation()}
+              target="_blank"
+              rel="noreferrer"
+              className="text-blue-600 hover:underline"
+            >
+              Portfolio
+            </a>
+          )}
+        </div>
+        <div className="text-xs text-slate-400">Click to edit</div>
       </div>
     </div>
   );
