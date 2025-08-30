@@ -1,0 +1,124 @@
+{
+	"info": {
+		"_postman_id": "4f7d0260-850b-4075-b1d7-ea5e01e82488",
+		"name": "Me-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "38006760"
+	},
+	"item": [
+		{
+			"name": "adding profile",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Kartikeya Gupta\",\n    \"email\": \"kartikeya@example.com\",\n    \"education\": \"Some University\",\n    \"skills\": [\"React\", \"Node\", \"TypeScript\"],\n    \"work\": [{\n        \"role\": \"Software Intern\",\n        \"company\": \"Persistent Systems\"\n    }],\n    \"links\": {\n        \"github\": \"https://github.com/22kartikeya\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update profile",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Kartikeya Gupta\",\n    \"email\": \"kartikeya@example.com\",\n    \"education\": \"Some University\",\n    \"skills\": [\"React\", \"Node\", \"TypeScript\"],\n    \"projects\": [{\n        \"title\": \"Projects - Created Projects\",\n        \"skills\": [\"React\", \"Next\", \"Express\"]\n    }],\n    \"work\": [{\n        \"role\": \"Software Intern\",\n        \"company\": \"Persistent Systems\"\n    }],\n    \"links\": {\n        \"github\": \"https://github.com/22kartikeya\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get all profiles",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "projects from query",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/api/profile",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "top skills",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "search",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		}
+	]
+}
